@@ -8,4 +8,5 @@ Then you can build it in usual way using 'make', and it produces the execution f
 To start it, just type
 ```
 ./vis --insert
+./vis --merge
 ```
