@@ -1,47 +1,52 @@
 #include "renderer.h"
 
-Renderer::Renderer(const int x, const int y) : width(x), height(y) {
-    window = new sf::RenderWindow(sf::VideoMode(x, y), "SortShow");
-}
+Renderer::Renderer(sf::RenderWindow* poWindow_p)
+    : m_poWindow(poWindow_p)
+{}
 
-void Renderer::Draw(const sf::Shape* const shape) const {
-    window->draw(*shape);
-}
-
-void Renderer::Clear() const {
-    window->clear();
-}
-
-void Renderer::Display() const {
-    window->display();
-}
-
-bool Renderer::isOpen() const {
-    return window->isOpen();
-}
-
-void Renderer::Close() const {
-    window->close();
-}
-
-bool Renderer::pollEvent(sf::Event* event) const {
-    return window->pollEvent(*event);
-}
-
-void Renderer::DrawArray(const int* const arr, const int size) {
-    int bar_width = (width - 10 - 2*size)/size;
-    for (int i = 0; i < size; ++i) {
-        int bar_height = arr[i] * 2;
-        sf::RectangleShape rectangle(sf::Vector2f(bar_width, bar_height));
-        rectangle.setFillColor(sf::Color::White);
-        int left = 10 + (bar_width + 2)*i;
-        int top = 500 - bar_height;
-        rectangle.setPosition(sf::Vector2f(left, top)); 
-        window->draw(rectangle);
+void Renderer::Draw(const sf::Shape* const shape) const
+{
+    if (m_poWindow)
+    {
+        m_poWindow->draw(*shape);
     }
 }
 
-Renderer::~Renderer() {
-    if (window->isOpen())
-        window->close();
+void Renderer::Clear() const
+{
+    if (m_poWindow)
+    {
+        m_poWindow->clear();
+    }
+}
+
+void Renderer::Display() const
+{
+    if (m_poWindow)
+    {
+        m_poWindow->display();
+    }
+}
+
+void Renderer::DrawArray(const int* const arr, const int size) const
+{
+    if (!m_poWindow)
+    {
+        return;
+    }
+
+    int iMargin = 5;
+    int iSpaceBetweenBars = 1;
+    double dBarWidth = (m_poWindow->getSize().x - 2*iMargin - (size - 1)* iSpaceBetweenBars)
+        / static_cast<double>(size);
+    for (int i = 0; i < size; ++i)
+    {
+        double dBarHeight = arr[i] * 2;
+        sf::RectangleShape oRectangle(sf::Vector2f(dBarWidth, dBarHeight));
+        oRectangle.setFillColor(sf::Color::White);
+        double dLeft = iMargin + (dBarWidth + iSpaceBetweenBars)*i;
+        double dTop = 500 - dBarHeight;
+        oRectangle.setPosition(sf::Vector2f(dLeft, dTop)); 
+        m_poWindow->draw(oRectangle);
+    }
 }

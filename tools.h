@@ -1,4 +1,7 @@
-#pragma once
+#ifndef TOOLS_H
+#define TOOLS_H
 
-void wait(int milliseconds);
-void print_help();
+void Wait(int milliseconds);
+void PrintHelp();
+
+#endif // TOOLS_H

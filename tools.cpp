@@ -1,13 +1,14 @@
-#include "tools.h"
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include <thread>
+#include <chrono>
 
-void wait(int milliseconds) {
-    sf::Clock clock;
-    while (clock.getElapsedTime().asMilliseconds() < milliseconds) {}
+void Wait(int milliseconds)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(milliseconds));
 }
 
-void print_help(){
+void PrintHelp()
+{
     std::cout << "Usage:\n";
     std::cout << "\t--insert\tinsertion sort\n";
     std::cout << "\t--merge \tmerge sort\n";
