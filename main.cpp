@@ -3,6 +3,7 @@
 #include "sorts.h"
 
 #include <string_view>
+#include <memory>
 
 namespace
 {
@@ -32,15 +33,14 @@ int main(int argc, char** argv)
     }
 
     std::string_view sCmdLineArgs(argv[1]);
-    SortStrategy* sort;
-
+    std::unique_ptr<SortStrategy> sort;
     if (sCmdLineArgs.find("insert") != std::string_view::npos)
     {
-        sort = new InsertionSort();
+        sort = std::make_unique<InsertionSort>();
     }
     else if(sCmdLineArgs.find("merge") != std::string_view::npos)
     {
-        sort = new MergeSort();
+        sort = std::make_unique<MergeSort>();
     }
     else
     {
@@ -78,6 +78,5 @@ int main(int argc, char** argv)
         }
     }
 
-    delete sort;
     return 0;
 }

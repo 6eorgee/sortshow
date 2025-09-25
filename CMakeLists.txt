@@ -12,4 +12,3 @@ target_link_libraries(${PROJECT_NAME}
     ${SFML_LIB_DIR}/libsfml-graphics.so
     ${SFML_LIB_DIR}/libsfml-window.so
 )
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/build/vis DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/bin/)
